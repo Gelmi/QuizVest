@@ -2,8 +2,39 @@
     "imagemFormulas":[
         {
             "id": 0,
-            "link": ""
+            "title": "termogeralpa",
+            "link": "https://github.com/Gelmi/QuizVest/blob/master/src/assets/formulas/termogeralpa.gif?raw=true"
+        },
+        {
+            "id": 1,
+            "title": "somageralpa",
+            "link": "https://github.com/Gelmi/QuizVest/blob/master/src/assets/formulas/somageralpa.gif?raw=true"
+        },
+        {
+            "id": 2,
+            "title": "termogeralpg",
+            "link": "https://github.com/Gelmi/QuizVest/blob/master/src/assets/formulas/termogeralpg.gif?raw=true"
+        },
+        {
+            "id": 3,
+            "title": "somadostermospg",
+            "link": "https://github.com/Gelmi/QuizVest/blob/master/src/assets/formulas/somadostermospg.gif?raw=true"
+        },
+        {
+            "id": 4,
+            "title": "produtodostermospg",
+            "link": "https://github.com/Gelmi/QuizVest/blob/master/src/assets/formulas/produtodostermospg.gif?raw=true"
+        },
+        {
+            "id": 5,
+            "title": "somapginfinita",
+            "link": "https://github.com/Gelmi/QuizVest/blob/master/src/assets/formulas/somapginfinita.gif?raw=true"
         }
     ],
-    "textoFormulas": []
+    "questoes":[
+        {
+            "id": 0,
+            "question":""
+        }
+    ]
 }
