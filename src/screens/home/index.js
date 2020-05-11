@@ -23,13 +23,6 @@ export default function Home({ navigation }) {
         >
             <Text style={styles.startButtonText}>Começar</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity 
-            style={styles.startButton}
-            onPress={() => changeArray(1, 'b')}
-        >
-            <Text style={styles.startButtonText}>Seila</Text>
-        </TouchableOpacity>
     </View>
   );
 }

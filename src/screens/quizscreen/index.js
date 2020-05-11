@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Image, ScrollView } from 'react-native';
 import Questoes from './../../data/questions.json';
 import Constants from "expo-constants";
-import {hp, wp} from '../../utils/responsive'
+import {hp, wp} from '../../utils/responsive';
+import { Ionicons } from '@expo/vector-icons';
 
 // import { Container } from './styles';
 
@@ -49,19 +50,38 @@ export default function quizscreen({ navigation }) {
   let ans = [];
 
   //let selected = new Array(nquestins);
-  const [selected, setSelected]= useState('');
+  const [selected, setSelected] = useState('');
 
+  const [checkState, setCheckState] = useState(0)
+
+  const [answer, setAnswer] = useState('');
+ 
+  const [questionStatus, setQuestionStatus] = useState(false);
+
+  const [correctQuestions, setCorrectQuestions] = useState(0);
+
+  
   const nextButton = (scrollRef, questionLenght) => {
     if(selected != ''){
-      if(counter <= questionLenght-2){
-        counter ++;
-        console.log(counter);
-        scrollRef.scrollTo({x: wp(100*counter), y: 0, animated: true});
-        setSelected('');
+      if(checkState == 0){
+        if(selected == answer){
+          setQuestionStatus(true);
+          setCorrectQuestions(correctQuestions+1);
+        } else { 
+          setQuestionStatus(false);
+        };
+        setCheckState(1);
       } else {
-        console.log('fim');
-        counter = 0;
-        navigation.navigate("Home");
+        if(counter <= questionLenght-1){
+          counter ++;
+          scrollRef.scrollTo({x: wp(100*counter), y: 0, animated: true});
+          setSelected('');
+        } else {
+          counter = 0;
+          navigation.navigate("Home");
+        }
+        setCheckState(0);
+        setQuestionStatus(false);
       }
     }
   }
@@ -73,13 +93,18 @@ export default function quizscreen({ navigation }) {
 
   const [array, setArray] = useState(new Array(nquestins));
 
-  const changeArray = (index, text) => {
+  const changeArray = (index, text, answer) => {
+    if(selected != text){
+      setSelected(text);
+    } else {
+      setSelected('');
+    };
     let arraySup = new Array(nquestins);
-    console.log(array);
     arraySup = array;
     arraySup[index] = text; 
     setArray(arraySup);
-    console.log(array);  
+    setAnswer(answer);
+    //console.log(array);
   };
 
   //const shuffledOptions = shuffle(q.options);
@@ -106,19 +131,48 @@ export default function quizscreen({ navigation }) {
                   :
                   <Text style={styles.questionCardText}>{q.question.content}</Text>
                 }
+                { checkState != 0 ?
+                  (
+                    questionStatus == true ? 
+                    <Ionicons style={styles.iconStyle} name="md-checkmark-circle" size={32} color="green" />
+                    :
+                    <Ionicons style={styles.iconStyle} name="md-close-circle" size={32} color="red" />
+                  )
+                  :
+                    <>
+                    </>
+                }
                 <View style={styles.questionCardOverlay}></View>
               </View>
               { q.options.map((text, id) => 
-                <TouchableOpacity key={id} style={array[index] == text ? styles.optionButtonSelected : styles.optionButton} onPress={() =>  changeArray(index, text)}>
+                <TouchableOpacity disabled={checkState == 0 ? false : true} key={id} style={selected == text ? styles.optionButtonSelected : styles.optionButton} onPress={() =>  changeArray(index, text, q.question.title)}>
                   <Text style={styles.optionText}>
                     {text}
                   </Text>
+                  { checkState != 0 ?
+                      questionStatus == false ? 
+                        text == answer ?
+                        <Ionicons style={styles.iconButtonStyle} name="md-checkmark-circle" size={32} color="green" />
+                        :
+                        <>
+                        </>  
+                      :
+                      <>
+                      </>
+                    :
+                    <>
+                    </>
+                  } 
                 </TouchableOpacity >
                 )
               }
             </View>
           ))
         }
+        <View style={{ width: wp(100), alignItems: 'center', flex: 1}}> 
+          <Text style={{ color: '#bb86fc', fontWeight: 'bold', fontSize: 64}}>{correctQuestions}/{nquestins}</Text>
+          <Text style={{ color: '#bb86fc', fontWeight: 'bold', fontSize: 32}}>Questões</Text>
+        </View>
     </ScrollView>
     <View style={{ alignItems: 'flex-end'}}>
       <TouchableOpacity 
@@ -135,7 +189,11 @@ export default function quizscreen({ navigation }) {
           onPress={() => nextButton(scrollRef, nquestins)}
       >
         <Text style={styles.optionText}>
-          Ir
+          { checkState != 0 ?
+            "Proxima"
+            :
+            "Verificar" 
+          }
         </Text>
       </TouchableOpacity>
     </View>
@@ -211,6 +269,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     //marginTop: "2%"
   },
+  iconStyle: {
+    position: 'absolute',
+    bottom: hp(1),
+    alignSelf: 'center'
+  },
+  iconButtonStyle: {
+    position: 'absolute',
+    alignSelf: 'flex-end',
+    right: 8
+  }
 });
 
   
