@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Image, ScrollView } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Image, ScrollView, BackHandler } from 'react-native';
 import Questoes from './../../data/questions.json';
 import Constants from "expo-constants";
 import {hp, wp} from '../../utils/responsive';
 import { Ionicons } from '@expo/vector-icons';
+import { useGlobal } from 'reactn';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 // import { Container } from './styles';
 
@@ -19,6 +22,12 @@ export default function quizscreen({ navigation }) {
   //}
 
   let scrollRef = null;
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => true)
+    return () =>
+      BackHandler.removeEventListener('hardwareBackPress', () => true)
+  }, [])
 
   function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -43,7 +52,9 @@ export default function quizscreen({ navigation }) {
 
   };
 
-  const question = Questoes.questoes;
+  //const question = Questoes.questoes;
+
+  const [question, setQuestion] = useGlobal('questoesmisturadas');
 
   const nquestins = question.length;
 
@@ -62,27 +73,32 @@ export default function quizscreen({ navigation }) {
 
   
   const nextButton = (scrollRef, questionLenght) => {
-    if(selected != ''){
-      if(checkState == 0){
-        if(selected == answer){
-          setQuestionStatus(true);
-          setCorrectQuestions(correctQuestions+1);
-        } else { 
-          setQuestionStatus(false);
-        };
-        setCheckState(1);
-      } else {
-        if(counter <= questionLenght-1){
-          counter ++;
-          scrollRef.scrollTo({x: wp(100*counter), y: 0, animated: true});
-          setSelected('');
+    if(counter <= questionLenght-1){
+      if(selected != ''){
+        if(checkState == 0){
+          if(selected == answer){
+            setQuestionStatus(true);
+            setCorrectQuestions(correctQuestions+1);
+          } else { 
+            setQuestionStatus(false);
+          };
+          setCheckState(1);
         } else {
-          counter = 0;
-          navigation.navigate("Home");
+          if(counter <= questionLenght-1){
+            counter ++;
+            scrollRef.scrollTo({x: wp(100*counter), y: 0, animated: true});
+            setSelected('');
+          } else {
+            counter = 0;
+            navigation.navigate("Welcome");
+          }
+          setCheckState(0);
+          setQuestionStatus(false);
         }
-        setCheckState(0);
-        setQuestionStatus(false);
       }
+    } else {
+      counter = 0;
+      navigation.navigate("Welcome");
     }
   }
 
@@ -107,7 +123,14 @@ export default function quizscreen({ navigation }) {
     //console.log(array);
   };
 
+  console.log("selected: "+selected);
+  console.log("checkState: "+checkState);
+  console.log("answer: "+answer);
+  console.log("questionStatus: "+questionStatus);
+  console.log("correctQuestions: "+correctQuestions);
+  console.log("counter: "+counter);
   //const shuffledOptions = shuffle(q.options);
+  console.log("------------------------------------------");
 
   return (
     <View style={styles.container}>
@@ -142,7 +165,9 @@ export default function quizscreen({ navigation }) {
                     <>
                     </>
                 }
-                <View style={styles.questionCardOverlay}></View>
+                <View style={{width: (wp(80)/nquestins)*(counter+1), height: hp(0.5), backgroundColor: '#bb86fc', position: 'absolute', bottom: 0, borderBottomLeftRadius: 3, borderBottomRightRadius: 3, zIndex: 2}}/>
+                <View style={{width: wp(80), height: hp(0.5), backgroundColor: '#1f1f1f', position: 'absolute', bottom: 0, borderBottomLeftRadius: 3, borderBottomRightRadius: 3, zIndex: 1}}/>
+                <View style={styles.questionCardOverlay}/>
               </View>
               { q.options.map((text, id) => 
                 <TouchableOpacity disabled={checkState == 0 ? false : true} key={id} style={selected == text ? styles.optionButtonSelected : styles.optionButton} onPress={() =>  changeArray(index, text, q.question.title)}>
@@ -184,11 +209,12 @@ export default function quizscreen({ navigation }) {
             alignItems: "center",
             justifyContent: "center",   
             marginBottom: wp(4),
-            marginRight: wp(4)
+            marginRight: wp(4),
+            elevation: 8
           }}
           onPress={() => nextButton(scrollRef, nquestins)}
       >
-        <Text style={styles.optionText}>
+        <Text style={styles.optionText, {fontWeight: 'bold'}}>
           { checkState != 0 ?
             "Proxima"
             :
@@ -221,7 +247,8 @@ const styles = StyleSheet.create({
     //alignItems: 'center',
     justifyContent: 'center',
     marginTop: hp(10),
-    marginBottom: hp(5)
+    marginBottom: hp(5),
+    elevation: 3
   },
   questionCardOverlay: {
     backgroundColor: '#fff',
@@ -250,7 +277,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",   
     //marginTop: "2%"
-    marginTop: 5
+    marginTop: 5,
+    elevation: 3
   },
   optionButtonSelected: {
     backgroundColor: '#854dc9',
@@ -260,7 +288,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",   
     //marginTop: "2%"
-    marginTop: 5
+    marginTop: 5,
+    elevation: 3
   },
   optionText: {
     width: '100%',

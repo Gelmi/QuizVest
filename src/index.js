@@ -4,8 +4,15 @@ import { View, StyleSheet } from 'react-native';
 // import { Container } from './styles';
 
 export default function Src() {
+
+  const AppContext = React.createContext({
+    questoesmisturadas: []
+  });
+
   return (
-    <View />
+    <AppContext.Provider value={questoesmisturadas}>
+      <View />
+    </AppContext.Provider>  
   );
 }
 

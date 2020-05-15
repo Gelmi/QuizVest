@@ -35,91 +35,316 @@
         {
             "id": 0,
             "question":{
-                "title":"Termo Geral PA",
+                "title":"Área do Triangulo",
                 "contentType":"image",
-                "content":"https://raw.githubusercontent.com/Gelmi/QuizVest/master/src/assets/formulas%20branco/btermogeralpa.png"
+                "content":"aaa"
             },
             "options":[
-                "Termo Geral PA",
-                "Soma Geral PA",
-                "Termo Geral PG",
-                "Soma dos Termos PG",
-                "Produto Dos Termos PG"
+                "Área do Triangulo",
+                "Área do Círculo",
+                "Área do Quadrado",
+                "Área do Trapézio",
+                "Área do Losango"
             ]
         },
         {
             "id": 1,
             "question":{
-                "title":"a",
-                "contentType":"text",
-                "content":"aaa"
+                "title":"Área do Triangulo",
+                "contentType":"image",
+                "content":"bbb"
             },
             "options":[
-                "a",
-                "b",
-                "c",
-                "d",
-                "e"
+                "Área do Triangulo",
+                "Área do Círculo",
+                "Área do Quadrado",
+                "Área do Trapézio",
+                "Área do Losango"
             ]
         },
         {
             "id": 2,
             "question":{
-                "title":"b",
-                "contentType":"text",
-                "content":"bbb"
+                "title":"Área do Triangulo",
+                "contentType":"image",
+                "content":"ccc"
             },
             "options":[
-                "a",
-                "b",
-                "c",
-                "d",
-                "e"
+                "Área do Triangulo",
+                "Área do Círculo",
+                "Área do Quadrado",
+                "Área do Trapézio",
+                "Área do Losango"
             ]
         },
         {
             "id": 3,
             "question":{
-                "title":"c",
-                "contentType":"text",
-                "content":"ccc"
+                "title":"Área do Círculo",
+                "contentType":"image",
+                "content":"ddd"
             },
             "options":[
-                "a",
-                "b",
-                "c",
-                "d",
-                "e"
+                "Área da Esfera",
+                "Área do Círculo",
+                "Área do Quadrado",
+                "Área do Cilindro",
+                "Área do Cone"
             ]
         },
         {
             "id": 4,
             "question":{
-                "title":"d",
-                "contentType":"text",
-                "content":"ddd"
+                "title":"Comprimento da Circunferência",
+                "contentType":"image",
+                "content":"eee"
             },
             "options":[
-                "a",
-                "b",
-                "c",
-                "d",
-                "e"
+                "Área da Esfera",
+                "Área do Círculo",
+                "Comprimento da Circunferência",
+                "Área do Cilindro",
+                "Área do Cone"
             ]
         },
         {
             "id": 5,
             "question":{
-                "title":"e",
-                "contentType":"text",
+                "title":"Condição de Existência do Triangulo",
+                "contentType":"image",
                 "content":"eee"
             },
             "options":[
-                "a",
-                "b",
-                "c",
-                "d",
-                "e"
+                "Condição de Existência do Triangulo",
+                "Condição de Existência da Circunferencia",
+                "Comprimento do Triangulo",
+                "Condição de Existência do Quadrado",
+                "Condição de Existência da Esfera"
+            ]
+        },
+        {
+            "id": 6,
+            "question":{
+                "title":"Condição de Existência do Triangulo",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Condição de Existência do Triangulo",
+                "Condição de Existência da Circunferencia",
+                "Comprimento do Triangulo",
+                "Condição de Existência do Quadrado",
+                "Condição de Existência da Esfera"
+            ]
+        },
+        {
+            "id": 7,
+            "question":{
+                "title":"Coordenadas do Baricentro",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Coordenadas do Baricentro",
+                "Distância entre Dois Pontos",
+                "Coeficiente Angular",
+                "Equação Segmentária da Reta",
+                "Coordenadas do Incentro"
+            ]
+        },
+        {
+            "id": 8,
+            "question":{
+                "title":"Coordenadas do Baricentro",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Coordenadas do Baricentro",
+                "Distância entre Dois Pontos",
+                "Coeficiente Angular",
+                "Equação Segmentária da Reta",
+                "Coordenadas do Incentro"
+            ]
+        },
+        {
+            "id": 9,
+            "question":{
+                "title":"Distância entre Dois Pontos",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Coordenadas do Baricentro",
+                "Distância entre Dois Pontos",
+                "Coeficiente Angular",
+                "Equação Segmentária da Reta",
+                "Equação Reduzida da Reta"
+            ]
+        },
+        {
+            "id": 10,
+            "question":{
+                "title":"Equação Reduzida da Circunferência",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Área Superficial da Esfera",
+                "Distância entre Dois Pontos",
+                "Área da Circunferência",
+                "Equação Segmentária da Reta",
+                "Equação Reduzida da Circunferênci"
+            ]
+        },
+        {
+            "id": 11,
+            "question":{
+                "title":"Equação Reduzida da Reta",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Coordenadas do Baricentro",
+                "Distância entre Dois Pontos",
+                "Coeficiente Angular",
+                "Equação Segmentária da Reta",
+                "Equação Reduzida da Reta"
+            ]
+        },
+        {
+            "id": 12,
+            "question":{
+                "title":"Equação Segmentária da Reta",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Coordenadas do Baricentro",
+                "Distância entre Dois Pontos",
+                "Coeficiente Angular",
+                "Equação Segmentária da Reta",
+                "Equação Reduzida da Reta"
+            ]
+        },
+        {
+            "id": 13,
+            "question":{
+                "title":"Lei dos Cossenos",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Lei dos Cossenos",
+                "Lei dos Senos",
+                "Lei dos Cossecantes",
+                "Teorema de Pitágoras",
+                "Área do Triângulo"
+            ]
+        },
+        {
+            "id": 14,
+            "question":{
+                "title":"Lei dos Senos",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Lei dos Cossenos",
+                "Lei dos Senos",
+                "Lei dos Cossecantes",
+                "Teorema de Pitágoras",
+                "Área do Triângulo"
+            ]
+        },
+        {
+            "id": 15,
+            "question":{
+                "title":"Número de Diagonais do Polígono",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Número de Diagonais do Polígono",
+                "Número de Vértices do Polígono",
+                "Número de Lados do Polígono",
+                "Área do Polígono",
+                "Perímetro do Polígono"
+            ]
+        },
+        {
+            "id": 16,
+            "question":{
+                "title":"Teorema de Pitágoras",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Lei dos Catetos",
+                "Lei dos Cossenos",
+                "Perímetro do Triangulo",
+                "Teorema de Pitágoras",
+                "Área do Triângulo"
+            ]
+        },
+        {
+            "id": 17,
+            "question":{
+                "title":"Ponto Médio do Segmento",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Coordenadas do Baricentro",
+                "Distância entre Dois Pontos",
+                "Ponto Médio do Segmento",
+                "Equação Segmentária da Reta",
+                "Equação Reduzida da Reta"
+            ]
+        },
+        {
+            "id": 18,
+            "question":{
+                "title":"Ponto Médio do Segmento",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Coordenadas do Baricentro",
+                "Distância entre Dois Pontos",
+                "Ponto Médio do Segmento",
+                "Equação Segmentária da Reta",
+                "Equação Reduzida da Reta"
+            ]
+        },
+        {
+            "id": 19,
+            "question":{
+                "title":"Produto dos Termos da PG",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Produto dos Termos da PG",
+                "Soma dos Termos da PG Finita",
+                "Termo Geral da PG",
+                "Soma dos Termos da PA",
+                "Produto dos Termos da PA"
+            ]
+        },
+        {
+            "id": 20,
+            "question":{
+                "title":"Soma dos Ângulos Externos",
+                "contentType":"image",
+                "content":"eee"
+            },
+            "options":[
+                "Soma dos Ângulos Externos do Polígono",
+                "Soma dos Ângulos Interno do Polígono",
+                "Cálculo do Ângulo Externo do Polígono",
+                "Cálculo do Ângulo Interno do Polígono",
+                "Ângulo do Polígono"
             ]
         }
     ]
