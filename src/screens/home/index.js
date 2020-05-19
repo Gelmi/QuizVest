@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import Questoes from './../../data/questions.json';
 import { useGlobal } from 'reactn';
@@ -13,6 +13,7 @@ export default function Home({ navigation }) {
 
   //const question = Questoes.questoes;
 
+  const [activePage, setActivePage] = useGlobal('activePage');
   //const question = getJsonFromApi();
 
   const [questoesmisturadas, setQuestoesmisturadas] = useGlobal('questoesmisturadas');
@@ -44,24 +45,11 @@ export default function Home({ navigation }) {
     setQuestoesmisturadas(arraySup);
     console.log('                             ');
     console.log(questoesmisturadas);
+    //setActivePage("QuizScreen");
     navigation.navigate("QuizScreen"); 
   }
 
-  function getJsonFromApi(number) {
-    return fetch('https://raw.githubusercontent.com/Gelmi/QuizVest/master/src/data/questions.json')
-      .then((response) => response.json())
-      .then((json) => {
-        //return json;
-        //const question = json;
-        //setQuestions(number, question);
-        console.log(json);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  async function getMoviesFromApiAsync(number) {
+  async function getJsonFromApiAsync(number) {
     try {
       let response = await fetch(
         'https://raw.githubusercontent.com/Gelmi/QuizVest/master/src/data/questions.json'
@@ -88,26 +76,29 @@ export default function Home({ navigation }) {
     }
   };
 
-  _retrieveData('@Username:key');
+  useEffect(()=>{
+    setActivePage('Home');
+    _retrieveData('@Username:key');
+  })
 
   return (
     <View style={styles.container}>
         <Text style={{ color: '#bb86fc', fontSize: hp(3), width: wp(80), textAlign: 'center'}}>Olá {username}, quantas questões quer responder?</Text>
         <TouchableOpacity 
             style={styles.startButton}
-            onPress={() => getMoviesFromApiAsync(2)}
+            onPress={() => getJsonFromApiAsync(2)}
         >
             <Text style={styles.startButtonText}>2 Questões</Text>
         </TouchableOpacity>
         <TouchableOpacity 
             style={styles.startButton}
-            onPress={() => getJsonFromApi(4)}
+            onPress={() => getJsonFromApiAsync(4)}
         >
             <Text style={styles.startButtonText}>4 Questões</Text>
         </TouchableOpacity>
         <TouchableOpacity 
             style={styles.startButton}
-            onPress={() => getMoviesFromApiAsync(6)}
+            onPress={() => getJsonFromApiAsync(6)}
         >
             <Text style={styles.startButtonText}>6 Questões</Text>
         </TouchableOpacity>
