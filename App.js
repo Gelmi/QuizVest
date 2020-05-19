@@ -8,36 +8,28 @@ import Progress from './src/screens/progress';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { setGlobal, useGlobal } from 'reactn';
+import { Provider as ReduxProvider } from 'react-redux'; 
+import store from './src/store';
 
 const Stack = createStackNavigator();
 
 export default function App() {  
-  setGlobal({
-    questoesmisturadas: [],
-    relDay: 0,
-    progressArray: [],
-    activePage: 'Welcome',
-  });
-
-  const [activePage, setActivePage] = useGlobal('activePage');
-
-  React.useEffect(() => {
-  }, []);
 
   return (
-      <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false
-          }}
-        >
-          <Stack.Screen name="Welcome" component={Welcome}/>
-          <Stack.Screen name="Progress" component={Progress}/>
-          <Stack.Screen name="Home" component={Home}/>
-          <Stack.Screen name="QuizScreen" component={QuizScreen}/>
-        </Stack.Navigator>
-      </NavigationContainer>  
+      <ReduxProvider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false
+            }}
+          >
+            <Stack.Screen name="Welcome" component={Welcome}/>
+            <Stack.Screen name="Progress" component={Progress}/>
+            <Stack.Screen name="Home" component={Home}/>
+            <Stack.Screen name="QuizScreen" component={QuizScreen}/>
+          </Stack.Navigator>
+        </NavigationContainer>  
+      </ReduxProvider>
   );
 }
 

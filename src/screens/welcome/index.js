@@ -4,26 +4,30 @@ import {hp, wp} from '../../utils/responsive';
 import { Ionicons } from '@expo/vector-icons';
 import Constants from "expo-constants";
 import { AsyncStorage } from 'react-native';
-import { useGlobal } from 'reactn';
+import { useDispatch } from 'react-redux';
 
 // import { Container } from './styles';
 
 const Welcome = ({navigation}) => {
 
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState(null);
   const [value, onChangeText] = React.useState('');
-  const [progressArray, setProgressArray] = useGlobal('progressArray');
   const arraySize = new Array(366);
-  const [relDay, setRelDay] = useGlobal('relDay');
   const today =  new Date(new Date(Date.now()).setHours(0,0,0,0));
-  const [activePage, setActivePage] = useGlobal('activePage');
+ 
+  function setRelDay(data) {
+    dispatch({ type: 'SET_RELDAY', data: data});
+  };
 
-  
+  function setProgressArray(data) {
+    dispatch({ type: 'ADD_PROGRESS_ARRAY', data: data});
+  };
+
   for(let i = 0; i<arraySize.length; i++){
     arraySize[i] = 0;
-  }
-
-  console.log(progressArray);
+  };
 
   const _storeData = async (name) => {
     try {
@@ -86,7 +90,6 @@ const Welcome = ({navigation}) => {
   useEffect(()=>{
     retrieveProgressData();
     getRelDay();
-    setActivePage('Welcome');
     //_retrieveData();
     //console.log(arraySize[365]);
     //storeProgressData(JSON.stringify(arraySize));
