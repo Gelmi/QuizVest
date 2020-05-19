@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, AsyncStorage, BackHandler} from 'react-native';
 import {hp, wp} from '../../utils/responsive';
-import { useGlobal } from 'reactn';
+import { useSelector } from 'react-redux';
 
 // import { Container } from './styles';
 
@@ -15,8 +15,8 @@ const progress = ({ navigation }) => {
     //console.log(daysOfYearArray[i])
     }
 
-    const [relDay, setRelDay] = useGlobal('relDay');
-    const [progressArray, setProgressArray] = useGlobal('progressArray');
+    const relDay = useSelector(state => state.relDay);
+    const progressArray = useSelector(state => state.progressArray);
 
     let relDaysOfWeekArray = [];
 
@@ -24,9 +24,6 @@ const progress = ({ navigation }) => {
         relDaysOfWeekArray[i] = relDay + (-6+i);
     };
 
-    relDaysOfWeekArray.forEach((element) => {
-        //console.log(progressArray[element]+' '+ daysOfYearArray[element]) ; 
-    })
 
     //console.log(relDaysOfWeekArray);
 

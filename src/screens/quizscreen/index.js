@@ -4,13 +4,15 @@ import Questoes from './../../data/questions.json';
 import Constants from "expo-constants";
 import {hp, wp} from '../../utils/responsive';
 import { Ionicons } from '@expo/vector-icons';
-import { useGlobal } from 'reactn';
+import { useSelector, useDispatch } from 'react-redux';
 // import { Container } from './styles';
 
 let counter = 0;
 //let progressCounter = 0;
 
 export default function quizscreen({ navigation }) {
+
+  const dispatch = useDispatch();
   
   //let selected = '';
 
@@ -27,12 +29,16 @@ export default function quizscreen({ navigation }) {
       //BackHandler.removeEventListener('hardwareBackPress', () => true)
   }, []) */
   //const question = Questoes.questoes;
-  const [relDay, setRelDay] = useGlobal('relDay');
-  const [progressArray, setProgressArray] = useGlobal('progressArray');
 
-  const [question, setQuestion] = useGlobal('questoesmisturadas');
+  const progressArray = useSelector(state => state.progressArray);
+  const relDay = useSelector(state => state.relDay);
+  const question = useSelector(state => state.questions);
 
   const nquestins = question.length;
+
+  function setProgressArray(data) {
+    dispatch({ type: 'ADD_PROGRESS_ARRAY', data: data});
+  };
 
   let ans = [];
 

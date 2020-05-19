@@ -5,10 +5,6 @@ import { View, StyleSheet } from 'react-native';
 
 export default function Src() {
 
-  const AppContext = React.createContext({
-    questoesmisturadas: []
-  });
-
   return (
     <AppContext.Provider value={questoesmisturadas}>
       <View />

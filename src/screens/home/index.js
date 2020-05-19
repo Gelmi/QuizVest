@@ -1,22 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import Questoes from './../../data/questions.json';
-import { useGlobal } from 'reactn';
 import {hp, wp} from '../../utils/responsive';
 import { AsyncStorage } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 // import { Container } from './styles';
 
 export default function Home({ navigation }) {
 
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState(null);
-
-  //const question = Questoes.questoes;
-
-  const [activePage, setActivePage] = useGlobal('activePage');
-  //const question = getJsonFromApi();
-
-  const [questoesmisturadas, setQuestoesmisturadas] = useGlobal('questoesmisturadas');
 
   function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -42,9 +37,8 @@ export default function Home({ navigation }) {
     arraySup.forEach(element => {
       element.options = shuffle(element.options);
     });
-    setQuestoesmisturadas(arraySup);
-    console.log('                             ');
-    console.log(questoesmisturadas);
+
+    dispatch({ type: 'ADD_QUESTIONS', data: arraySup});
     //setActivePage("QuizScreen");
     navigation.navigate("QuizScreen"); 
   }
@@ -77,7 +71,6 @@ export default function Home({ navigation }) {
   };
 
   useEffect(()=>{
-    setActivePage('Home');
     _retrieveData('@Username:key');
   })
 
