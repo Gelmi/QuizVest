@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Image, ScrollView, BackHandler } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Image, ScrollView, BackHandler, Alert, AsyncStorage } from 'react-native';
 import Questoes from './../../data/questions.json';
 import Constants from "expo-constants";
 import {hp, wp} from '../../utils/responsive';
 import { Ionicons } from '@expo/vector-icons';
 import { useGlobal } from 'reactn';
-import { useFocusEffect } from '@react-navigation/native';
-
-
 // import { Container } from './styles';
 
 let counter = 0;
+//let progressCounter = 0;
 
 export default function quizscreen({ navigation }) {
-
+  
   //let selected = '';
 
   //function setSelected(text) {
@@ -22,37 +20,15 @@ export default function quizscreen({ navigation }) {
   //}
 
   let scrollRef = null;
-
+/* 
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', () => true)
-    return () =>
-      BackHandler.removeEventListener('hardwareBackPress', () => true)
-  }, [])
-
-  function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
-  
-    // While there remain elements to shuffle...
-    while (0 !== currentIndex) {
-  
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-  
-      // And swap it with the current element.
-      temporaryValue = array[currentIndex];
-      array[currentIndex] = array[randomIndex];
-      array[randomIndex] = temporaryValue;
-    }
-  
-    return array;
-  }
-  
-  function generateQuiz() {
-
-  };
-
+    //return () =>
+      //BackHandler.removeEventListener('hardwareBackPress', () => true)
+  }, []) */
   //const question = Questoes.questoes;
+  const [relDay, setRelDay] = useGlobal('relDay');
+  const [progressArray, setProgressArray] = useGlobal('progressArray');
 
   const [question, setQuestion] = useGlobal('questoesmisturadas');
 
@@ -71,37 +47,9 @@ export default function quizscreen({ navigation }) {
 
   const [correctQuestions, setCorrectQuestions] = useState(0);
 
-  
-  const nextButton = (scrollRef, questionLenght) => {
-    if(counter <= questionLenght-1){
-      if(selected != ''){
-        if(checkState == 0){
-          if(selected == answer){
-            setQuestionStatus(true);
-            setCorrectQuestions(correctQuestions+1);
-          } else { 
-            setQuestionStatus(false);
-          };
-          setCheckState(1);
-        } else {
-          if(counter <= questionLenght-1){
-            counter ++;
-            scrollRef.scrollTo({x: wp(100*counter), y: 0, animated: true});
-            setSelected('');
-          } else {
-            counter = 0;
-            navigation.navigate("Welcome");
-          }
-          setCheckState(0);
-          setQuestionStatus(false);
-        }
-      }
-    } else {
-      counter = 0;
-      navigation.navigate("Welcome");
-    }
-  }
+  const [progressCounter, setProgressCounter] = useState(counter);
 
+  //const [progressData, setProgressData] = useState(counter);
   const selectButton = (array, text, index) => {
     array.pop();
     array.push(text)
@@ -123,15 +71,74 @@ export default function quizscreen({ navigation }) {
     //console.log(array);
   };
 
-  console.log("selected: "+selected);
-  console.log("checkState: "+checkState);
-  console.log("answer: "+answer);
-  console.log("questionStatus: "+questionStatus);
-  console.log("correctQuestions: "+correctQuestions);
-  console.log("counter: "+counter);
-  //const shuffledOptions = shuffle(q.options);
-  console.log("------------------------------------------");
+  // console.log("selected: "+selected);
+  // console.log("checkState: "+checkState);
+  // console.log("answer: "+answer);
+  // console.log("questionStatus: "+questionStatus);
+  // console.log("correctQuestions: "+correctQuestions);
+  // console.log("counter: "+counter);
+  // console.log("progressCounter: "+progressCounter)
+  // const shuffledOptions = shuffle(q.options);
+  // console.log("------------------------------------------");
 
+  //let dataToday = [];
+  const storeProgressData = async (value) => {
+    try {
+      await AsyncStorage.setItem(
+        '@Progress:key',
+        value
+      );
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  const nextButton = (scrollRef, questionLenght) => {
+    if(counter <= questionLenght-1){
+      if(selected != ''){
+        if(checkState == 0){
+          if(selected == answer){
+            setQuestionStatus(true);
+            setCorrectQuestions(correctQuestions+1);
+          } else { 
+            setQuestionStatus(false);
+          };
+          setCheckState(1);
+          setProgressCounter(progressCounter+1);
+        } else {
+          if(counter <= questionLenght-1){
+            counter ++;
+            scrollRef.scrollTo({x: wp(100*counter), y: 0, animated: true});
+            setSelected('');
+          } else {
+            counter = 0;
+            navigation.navigate("Welcome");
+          }
+          setCheckState(0);
+          setQuestionStatus(false);
+        }
+      } else { 
+        Alert.alert(
+          'Ops',
+          'Selecione uma opção antes de verificar',
+          [
+            { text: 'OK', onPress: () => console.log('OK Pressed') }
+          ],
+          { cancelable: false }
+        );
+        //console.log('kk');
+      }
+    } else {
+      counter = 0;
+      const arrayP = progressArray;
+      arrayP[relDay] = arrayP[relDay]+correctQuestions;
+      storeProgressData(JSON.stringify(arrayP));
+      setProgressArray(arrayP);
+      setProgressCounter(0);
+      navigation.navigate("Welcome");
+    }
+  }
+  
   return (
     <View style={styles.container}>
       <ScrollView 
@@ -165,7 +172,7 @@ export default function quizscreen({ navigation }) {
                     <>
                     </>
                 }
-                <View style={{width: (wp(80)/nquestins)*(counter+1), height: hp(0.5), backgroundColor: '#bb86fc', position: 'absolute', bottom: 0, borderBottomLeftRadius: 3, borderBottomRightRadius: 3, zIndex: 2}}/>
+                <View style={{width: (wp(80)/nquestins)*(progressCounter), height: hp(0.5), backgroundColor: '#bb86fc', position: 'absolute', bottom: 0, borderBottomLeftRadius: 3, borderBottomRightRadius: 3, zIndex: 2}}/>
                 <View style={{width: wp(80), height: hp(0.5), backgroundColor: '#1f1f1f', position: 'absolute', bottom: 0, borderBottomLeftRadius: 3, borderBottomRightRadius: 3, zIndex: 1}}/>
                 <View style={styles.questionCardOverlay}/>
               </View>

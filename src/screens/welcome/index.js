@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, Text, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Image, TouchableOpacity, Text, TextInput, BackHandler } from 'react-native';
 import {hp, wp} from '../../utils/responsive';
 import { Ionicons } from '@expo/vector-icons';
 import Constants from "expo-constants";
 import { AsyncStorage } from 'react-native';
+import { useGlobal } from 'reactn';
 
 // import { Container } from './styles';
 
@@ -11,7 +12,19 @@ const Welcome = ({navigation}) => {
 
   const [username, setUsername] = useState(null);
   const [value, onChangeText] = React.useState('');
+  const [progressArray, setProgressArray] = useGlobal('progressArray');
+  const arraySize = new Array(366);
+  const [relDay, setRelDay] = useGlobal('relDay');
+  const today =  new Date(new Date(Date.now()).setHours(0,0,0,0));
+  const [activePage, setActivePage] = useGlobal('activePage');
+
   
+  for(let i = 0; i<arraySize.length; i++){
+    arraySize[i] = 0;
+  }
+
+  console.log(progressArray);
+
   const _storeData = async (name) => {
     try {
       await AsyncStorage.setItem(
@@ -30,11 +43,54 @@ const Welcome = ({navigation}) => {
       if (value !== null) {
         // We have data!!
         setUsername(value);
+        //console.log(value);
       } 
     } catch (error) {
       // Error retrieving data
     }
   };
+
+  const storeProgressData = async (value) => {
+    try {
+      await AsyncStorage.setItem(
+        '@Progress:key',
+        value
+      );
+    } catch (error) {
+      // Error saving data
+    }
+  };
+
+  const retrieveProgressData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@Progress:key');
+      if (value !== null) {
+        // We have data!!
+        //console.log(JSON.parse(value));
+        setProgressArray(JSON.parse(value));
+        //console.log(progressArray);
+        //console.log(value);
+      } else {
+        storeProgressData(JSON.stringify(arraySize));
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
+  const getRelDay = () => {
+    const januaryFirst = new Date(new Date().getFullYear(), 0, 1);
+    setRelDay((today.getTime()-januaryFirst.getTime())/(1000 * 3600 * 24));
+  }
+
+  useEffect(()=>{
+    retrieveProgressData();
+    getRelDay();
+    setActivePage('Welcome');
+    //_retrieveData();
+    //console.log(arraySize[365]);
+    //storeProgressData(JSON.stringify(arraySize));
+  },[])
 
   _retrieveData('@Username:key');
 
@@ -71,7 +127,7 @@ const Welcome = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity 
               style={styles.progressButton}
-              onPress={() => {}}
+              onPress={() => navigation.navigate("Progress")}
         >
           <Text style={styles.startButtonText}>Progresso</Text>
         </TouchableOpacity>
